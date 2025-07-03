@@ -1,0 +1,12 @@
+[project]
+name = "1-scraping-data"
+version = "0.1.0"
+description = "Partie de scraping initial : récupération automatisée de fichiers PDF depuis différents sites web afin de constituer un dataset de documents variés et pertinents pour l’indexation et l’enrichissement des réponses du modèle LLM."
+authors = ["Malek BOUMEDINE <malek.boumedine@gmail.com>"]
+keywords = ["scraping", "data", "LLM", "RAG"]
+licence = "MIT"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "scrapy>=2.13.3",
+]
