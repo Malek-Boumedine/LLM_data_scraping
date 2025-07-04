@@ -70,5 +70,5 @@ with sync_playwright() as p:
     browser.close()
 
 # enregistrement dans un json
-with open("data/articles_links.json", "w", encoding="utf-8") as output_file:
+with open("data/scrapping/articles_links.json", "w", encoding="utf-8") as output_file:
     json.dump(articles_data, output_file, indent=4, ensure_ascii=False)
