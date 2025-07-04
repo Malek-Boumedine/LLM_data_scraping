@@ -44,10 +44,10 @@ with open("data/scraping/articles_links_BOCC.json", "r", encoding="utf_8") as f 
         else : 
             bocc_pdf.append(article)
 
-with open("data/scraping/cleaned/no_pdf_bocc.json", "w", encoding="utf_8") as f : 
+with open("data/scraping/cleaned/no_pdf_bocc.json", "w", encoding="utf-8") as f : 
     json.dump(bocc_no_pdf, f, indent=4, ensure_ascii=False)
     
-with open("data/scraping/cleaned/pdf_bocc.json", "w", encoding="utf_8") as f : 
+with open("data/scraping/cleaned/pdf_bocc.json", "w", encoding="utf-8") as f : 
     json.dump(bocc_pdf, f, indent=4, ensure_ascii=False)
     
     
