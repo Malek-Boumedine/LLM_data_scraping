@@ -11,3 +11,4 @@ wheels/
 *test.py
 data/conventions_etendues/*.pdf
 data/BOCC/*.pdf
+data/BOCC_no_pdf_direct_link/*.pdf
