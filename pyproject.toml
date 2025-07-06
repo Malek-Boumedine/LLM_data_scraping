@@ -11,6 +11,7 @@ dependencies = [
     "bs4>=0.0.2",
     "cloudscraper>=1.2.71",
     "playwright>=1.53.0",
+    "pypdf2>=3.0.1",
     "scrapy>=2.13.3",
     "scrapy-playwright>=0.0.43",
     "selenium>=4.34.0",
