@@ -15,7 +15,7 @@ from datetime import datetime
 
 base_url = "https://www.legifrance.gouv.fr"
 output_path_pdfs = "data/BOCC_no_pdf_direct_link/"
-logs_dir = "logs/bocc"
+logs_dir = "logs/bocc/"
 
 with open("data/scraping/cleaned/no_pdf_bocc.json", "r", encoding="utf-8") as f : 
     data = json.load(f)
@@ -149,7 +149,7 @@ def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = outpu
     
     # ouvrir le fichier log dès le départ pour enregistrer les logs
     now_str = datetime.now().strftime("%d-%m-%Y_%H:%M:%S")
-    with open(f"{logs_dir}scrapping_bocc_{now_str}.log", "a", encoding="utf-8") as logfile:
+    with open(f"{logs_dir}scrapping_no_pdf_bocc_{now_str}.log", "a", encoding="utf-8") as logfile:
         log_and_print("\n"+"="*50+"  DÉBUT DE TRAITEMENT  "+"="*50+"\n"
                       +"="*43+f"  NOMBRE D'ARTICLES A TRAITER : {len(data)}  "+"="*43,
                       logfile)
@@ -157,8 +157,8 @@ def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = outpu
         
         try :
             
-            # for x, article in enumerate(data, 1):
-            for x, article in enumerate(data[:3], 1):
+            for x, article in enumerate(data, 1):
+            # for x, article in enumerate(data[:3], 1):
                 try :
                         
                     # vérifier que le fichier n'a pas été déja téléchargé
@@ -188,7 +188,7 @@ def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = outpu
                                 log_and_print(error_message, logfile)
                             
                         if len(download_pages) == 0 :
-                            log_and_print(f"❌ Aucun fichier PDF trouvé pour l'article {file_name}, on passe au suivant.\n" + "#"*80 + "\n",logfile)
+                            log_and_print(f"❌ Aucun fichier PDF trouvé pour l'article {file_name}, on passe au suivant.\n\n" + "#"*123 + "\n",logfile)
                             continue
                         
                         log_and_print(f"Début traitement article : {file_name} ({len(download_pages)} PDFs attendus)", logfile)
