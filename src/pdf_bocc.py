@@ -6,7 +6,7 @@ import os
 import re
 import random
 import time
-from no_pdf_bocc import log_and_print
+from utils import log_and_print
 from datetime import datetime
 
 

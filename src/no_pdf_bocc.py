@@ -8,8 +8,8 @@ import time
 import random
 from PyPDF2 import PdfReader, PdfWriter
 import io
-from typing import TextIO
 from datetime import datetime
+from utils import log_and_print
 
 
 
@@ -128,10 +128,6 @@ def write_binary_to_pdf(pdf_binary_content : list, file_path : str) :
 
 # fonction pour enregistrer les logs, pour vérifier les echecs
 
-def log_and_print(message : str, logfile : TextIO) : 
-    print(message)
-    logfile.write(message + "\n")
-    logfile.flush()
 
 
 ###########################################################################
