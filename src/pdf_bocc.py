@@ -12,13 +12,14 @@ from datetime import datetime
 
 
 base_url = "https://www.legifrance.gouv.fr"
-
 output_path = "data/BOCC_pdf_direct_link/"
 logs_dir = "logs/bocc/"
 
 with open("data/scraping/cleaned/pdf_bocc.json", "r", encoding="utf-8") as f : 
     data = json.load(f)
 
+
+##################################################
 
 def get_download_link(article: dict, base_url: str) -> tuple[str, str, str, str]:
     """
@@ -137,5 +138,4 @@ if __name__ == "__main__":
     failed = iterate_all_untill_all_downloaded(data)
     print("Traitement terminé.")
     print(f"Articles restants (échecs) : {len(failed)}")
-
 

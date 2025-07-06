@@ -6,18 +6,23 @@ import os
 import re
 import random
 import time
+from utils import log_and_print
 
 
 
+base_url = "https://www.legifrance.gouv.fr"
 output_path = "data/conventions_etendues/"
+logs_dir = "logs/convention_etendues/"
+os.makedirs(output_path, exist_ok=True)
+os.makedirs(logs_dir, exist_ok=True)
+
 with open("data/scraping/cleaned/pdf_cleaned_conventions_etendues.json", "r", encoding="utf-8") as f :
     data = json.load(f)
-base_url = "https://www.legifrance.gouv.fr"
 
-print(len(data))
+
+########################################################################
 
 def download_pdfs(data, base_url, output_path) : 
-    os.makedirs(output_path, exist_ok=True)
     failed_downloads = []
     
     for article in data :

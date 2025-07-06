@@ -1,7 +1,18 @@
 from PyPDF2 import PdfReader
 import os
 from typing import TextIO
+import json
 
+
+
+################################################################################################
+
+# enregistrement dans un json
+
+def save_data_json(data: list[dict], json_file_name: str, output_path: str = "data/scrapping") -> None: 
+    output_file = os.path.join(output_path, json_file_name)
+    with open(output_file, "w", encoding="utf-8") as output_file:
+        json.dump(data, output_file, indent=4, ensure_ascii=False)
 
 
 ##########################################################################################
@@ -65,5 +76,4 @@ def log_and_print(message : str, logfile : TextIO) -> None :
 
 
 ##########################################################################################
-
 
