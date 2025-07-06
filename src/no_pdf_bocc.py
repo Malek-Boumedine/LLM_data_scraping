@@ -15,7 +15,7 @@ from datetime import datetime
 
 base_url = "https://www.legifrance.gouv.fr"
 output_path_pdfs = "data/BOCC_no_pdf_direct_link/"
-logs_dir = "logs/"
+logs_dir = "logs/bocc"
 
 with open("data/scraping/cleaned/no_pdf_bocc.json", "r", encoding="utf-8") as f : 
     data = json.load(f)
