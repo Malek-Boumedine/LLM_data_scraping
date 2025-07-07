@@ -12,8 +12,11 @@ from datetime import datetime
 
 
 base_url = "https://www.legifrance.gouv.fr"
-output_path = "data/BOCC_pdf_direct_link/"
+output_path = "data/BOCC_pdf_direct_link111/"
 logs_dir = "logs/bocc/"
+
+os.makedirs(output_path, exist_ok=True)
+os.makedirs(logs_dir, exist_ok=True)
 
 with open("data/scraping/cleaned/pdf_bocc.json", "r", encoding="utf-8") as f : 
     data = json.load(f)
@@ -73,7 +76,7 @@ def download_pdf(download_link: str, file_path: str) -> tuple[bool, str]:
 ##################################################
 
 
-def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = output_path, max_attempts: int = 3):
+def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = output_path):
     
     os.makedirs(logs_dir, exist_ok=True)
     os.makedirs(output_path, exist_ok=True)

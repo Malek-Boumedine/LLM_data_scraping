@@ -85,6 +85,7 @@ def extract_ce_articles_informations(start_url : str = start_url) -> list[dict]:
             
         print("Nombre total d'articles récupérés : ", len(articles_data))
         browser.close()
+        
     return articles_data
 
 
