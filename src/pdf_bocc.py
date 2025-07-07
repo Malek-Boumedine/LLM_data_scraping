@@ -6,19 +6,23 @@ import os
 import re
 import random
 import time
-from no_pdf_bocc import log_and_print
+from utils import log_and_print
 from datetime import datetime
 
 
 
 base_url = "https://www.legifrance.gouv.fr"
-
-output_path = "data/BOCC_pdf_direct_link/"
+output_path = "data/BOCC_pdf_direct_link111/"
 logs_dir = "logs/bocc/"
+
+os.makedirs(output_path, exist_ok=True)
+os.makedirs(logs_dir, exist_ok=True)
 
 with open("data/scraping/cleaned/pdf_bocc.json", "r", encoding="utf-8") as f : 
     data = json.load(f)
 
+
+##################################################
 
 def get_download_link(article: dict, base_url: str) -> tuple[str, str, str, str]:
     """
@@ -72,7 +76,7 @@ def download_pdf(download_link: str, file_path: str) -> tuple[bool, str]:
 ##################################################
 
 
-def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = output_path, max_attempts: int = 3):
+def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = output_path):
     
     os.makedirs(logs_dir, exist_ok=True)
     os.makedirs(output_path, exist_ok=True)
@@ -137,5 +141,4 @@ if __name__ == "__main__":
     failed = iterate_all_untill_all_downloaded(data)
     print("Traitement terminé.")
     print(f"Articles restants (échecs) : {len(failed)}")
-
 
