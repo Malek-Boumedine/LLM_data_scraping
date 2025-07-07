@@ -10,7 +10,7 @@ load_dotenv()
 
 
 
-output_path = "data/scrapping/"
+output_path = "data/scraping/"
 os.makedirs(output_path, exist_ok=True)
 base_url = "https://www.legifrance.gouv.fr"
 start_url = os.getenv("START_URL_CONV_ETEN", "https://www.legifrance.gouv.fr/liste/idcc?facetteTexteBase=TEXTE_BASE&facetteEtat=VIGUEUR_ETEN&facetteEtat=VIGUEUR_NON_ETEN&sortValue=DATE_UPDATE&pageSize=9999&page=1&tab_selection=all#idcc")

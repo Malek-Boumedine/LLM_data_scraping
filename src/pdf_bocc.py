@@ -6,13 +6,13 @@ import os
 import re
 import random
 import time
-from utils import log_and_print
+from src.utils import log_and_print
 from datetime import datetime
 
 
 
 base_url = "https://www.legifrance.gouv.fr"
-output_path = "data/BOCC_pdf_direct_link111/"
+output_path = "data/BOCC_pdf_direct_link/"
 logs_dir = "logs/bocc/"
 
 os.makedirs(output_path, exist_ok=True)
@@ -81,7 +81,7 @@ def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = outpu
     os.makedirs(logs_dir, exist_ok=True)
     os.makedirs(output_path, exist_ok=True)
     now_str = datetime.now().strftime("%d-%m-%Y_%H-%M-%S")
-    log_path = f"{logs_dir}scrapping_pdf_bocc_{now_str}.log"
+    log_path = f"{logs_dir}scraping_pdf_bocc_{now_str}.log"
     files_already_downloaded = set(os.listdir(output_path))
     start_time = time.perf_counter()
     failed_articles = []

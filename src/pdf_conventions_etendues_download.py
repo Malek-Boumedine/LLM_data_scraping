@@ -6,7 +6,7 @@ import os
 import re
 import random
 import time
-from utils import log_and_print
+from src.utils import log_and_print
 from datetime import datetime
 
 
