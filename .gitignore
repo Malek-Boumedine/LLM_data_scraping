@@ -17,3 +17,4 @@ logs/
 data/BOCC_pdf_direct_link*/*.pdf
 todo*
 .env
+releases.md
