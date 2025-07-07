@@ -6,10 +6,12 @@ from src.no_pdf_conventions_etendues_download import download_manually
 from src.pdf_bocc import iterate_all_untill_all_downloaded as pdf_bocc_down
 from src.no_pdf_bocc import iterate_all_untill_all_downloaded as no_pdf_bocc_down
 from src.utils import check_pdf_health
-
+import json
 import sys
 import time
 import os
+
+
 
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -19,12 +21,16 @@ def main_menu():
         clear_screen()
         print("="*20 + "  Bienvenue au programme de scraping des fichiers de conventions collectives  " + "="*20)
         print("""
+        🔔 IMPORTANT : Pour une premiere utilisation, suivez les étapes 1 jusqu'à 6 dans l'ordre. 🔔
+        🔔 en cas d'erreur sur une étape, la relancer jusqu'à ce qu'elle se termine avec succès 🔔
+    
+    
     1. Scraper le json des conventions étendues
-    2. Scraper le json des BOCC 
-    3. Scraper les BOCC avec PDF direct
-    4. Scraper les BOCC sans PDF direct
-    5. Scraper les conventions étendues avec PDF direct
-    6. Scraper les conventions étendues sans PDF direct (scraping manuel)
+    2. Scraper le json des Bulletins Officiels des Conventions Collectives 
+    3. Télécharger les Bulletins Officiels des Conventions Collectives avec lien PDF direct
+    4. Télécharger les Bulletins Officiels des Conventions Collectives sans lien PDF direct
+    5. Télécharger les conventions étendues avec lien PDF direct
+    6. Télécharger les conventions étendues sans lien PDF direct (scraping semi automatique)
     7. Vérifier la santé des fichiers PDF téléchargés
     8. Consulter les logs
     9. Quitter
@@ -32,37 +38,70 @@ def main_menu():
         try:
             choice = int(input("Faites un choix (1-9) : ").strip())
             if choice == 1:
-                extract_ce_articles_informations()
-                print("Scraping des conventions étendues terminé.")
+                print("Les anciennes données seront écrasées, voulez-vous continuer ? ")
+                ch = input("Votre choix (O/n) :  ").lower()
+                if ch in ["o", "y", "oui", "yes", ""] :
+                    extract_ce_articles_informations()
+                    print("Scraping des conventions étendues terminé.")
+                else :
+                    print("Abandon ...")
+                
             elif choice == 2:
-                extract_bocc_articles_informations()
-                print("Scraping des BOCC terminé.")
+                print("Les anciennes données seront écrasées, voulez-vous continuer ? ")
+                ch = input("Votre choix (O/n) :  ").lower()
+                if ch in ["o", "y", "oui", "yes", ""] :
+                    extract_bocc_articles_informations()
+                    print("Scraping des BOCC terminé.")
+                else :
+                    print("Abandon ...")
+                
             elif choice == 3:
                 preprocessing_bocc()
-                pdf_bocc_down()
+                time.sleep(1)
+                with open("data/scraping/cleaned/pdf_bocc.json", "r", encoding="utf-8") as f:
+                    data3 = json.load(f)
+                pdf_bocc_down(data3)
                 print("Téléchargement des BOCC avec PDF direct terminé.")
+                
             elif choice == 4:
                 preprocessing_bocc()
-                no_pdf_bocc_down()
+                time.sleep(1)
+                with open("data/scraping/cleaned/no_pdf_bocc.json", "r", encoding="utf-8") as f:
+                    data4 = json.load(f)
+
+                no_pdf_bocc_down(data4)
                 print("Téléchargement des BOCC sans PDF direct terminé.")
+                
             elif choice == 5:
                 preprocessing_ce()
-                pdf_ce_down()
+                time.sleep(1)
+                with open("data/scraping/cleaned/pdf_cleaned_conventions_etendues.json", "r", encoding="utf-8") as f:
+                    data5 = json.load(f)
+                pdf_ce_down(data5)
                 print("Téléchargement des conventions étendues avec PDF direct terminé.")
+                
             elif choice == 6:
                 preprocessing_ce()
-                download_manually()
+                time.sleep(1)
+                with open("data/scraping/cleaned/no_pdf_cleaned_conventions_etendues.json", "r", encoding="utf-8") as f:
+                    data6 = json.load(f)
+                download_manually(data6)
                 print("Téléchargement manuel terminé.")
+                
             elif choice == 7:
                 pdf_health_menu()
+                
             elif choice == 8:
                 logs_menu()
+                
             elif choice == 9:
                 print("\nMerci d'avoir utilisé ce programme. À bientôt !")
                 time.sleep(1)
                 sys.exit(0)
+                
             else:
                 print("Erreur de saisie ! Veuillez saisir un chiffre entre 1 et 9.")
+                
         except Exception as e:
             print(f"Erreur : {e}")
         input("\nAppuyez sur Entrée pour revenir au menu...")

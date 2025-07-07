@@ -14,13 +14,22 @@ from datetime import datetime
 base_url = "https://www.legifrance.gouv.fr"
 output_path = "data/BOCC_pdf_direct_link/"
 logs_dir = "logs/bocc/"
+json_path = "data/scraping/cleaned"
 
 os.makedirs(output_path, exist_ok=True)
 os.makedirs(logs_dir, exist_ok=True)
+os.makedirs(json_path, exist_ok=True)
 
-with open("data/scraping/cleaned/pdf_bocc.json", "r", encoding="utf-8") as f : 
+file_name = "pdf_bocc.json"
+file_path = os.path.join(json_path, file_name)
+
+if not (os.path.isfile(file_path) and os.stat(file_path).st_size > 0):
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump([{'test': 'test'}], f, ensure_ascii=False, indent=2)
+
+with open(file_path, "r", encoding="utf-8") as f:
     data = json.load(f)
-
+    
 
 ##################################################
 
@@ -76,7 +85,7 @@ def download_pdf(download_link: str, file_path: str) -> tuple[bool, str]:
 ##################################################
 
 
-def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = output_path):
+def iterate_all_untill_all_downloaded(data: list[dict] = data, output_path: str = output_path):
     
     os.makedirs(logs_dir, exist_ok=True)
     os.makedirs(output_path, exist_ok=True)
@@ -136,9 +145,7 @@ def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = outpu
     
 
 if __name__ == "__main__":
-    with open("data/scraping/cleaned/pdf_bocc.json", "r", encoding="utf-8") as f:
-        data = json.load(f)
-    failed = iterate_all_untill_all_downloaded(data)
+    failed = iterate_all_untill_all_downloaded()
     print("Traitement terminé.")
     print(f"Articles restants (échecs) : {len(failed)}")
 

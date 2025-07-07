@@ -18,3 +18,5 @@ data/BOCC_pdf_direct_link*/*.pdf
 todo*
 .env
 releases.md
+data/scraping/*.json
+data/scraping/cleaned/*.json
