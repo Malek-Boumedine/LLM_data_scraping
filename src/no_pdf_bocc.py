@@ -16,10 +16,22 @@ from src.utils import log_and_print
 base_url = "https://www.legifrance.gouv.fr"
 output_path_pdfs = "data/BOCC_no_pdf_direct_link/"
 logs_dir = "logs/bocc/"
+json_path = "data/scraping/cleaned"
 
-with open("data/scraping/cleaned/no_pdf_bocc.json", "r", encoding="utf-8") as f : 
+os.makedirs(output_path_pdfs, exist_ok=True)
+os.makedirs(logs_dir, exist_ok=True)
+os.makedirs(json_path, exist_ok=True)
+
+file_name = "no_pdf_bocc.json"
+file_path = os.path.join(json_path, file_name)
+
+if not (os.path.isfile(file_path) and os.stat(file_path).st_size > 0):
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump([{'test': 'test'}], f, ensure_ascii=False, indent=2)
+    
+with open(file_path, "r", encoding="utf-8") as f:
     data = json.load(f)
-
+    
 
 ###########################################################################
 
@@ -134,7 +146,7 @@ def write_binary_to_pdf(pdf_binary_content : list, file_path : str) :
     
 # itérer et ajouter de la récursion pour tout récupérer
 
-def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = output_path_pdfs,  max_attempts: int = 3, max_attempt_article: int = 3) : 
+def iterate_all_untill_all_downloaded(data: list[dict] = data, output_path: str = output_path_pdfs,  max_attempts: int = 3, max_attempt_article: int = 3) : 
     
     os.makedirs(logs_dir, exist_ok=True)
     os.makedirs(output_path, exist_ok=True)
@@ -255,6 +267,6 @@ def iterate_all_untill_all_downloaded(data: list[dict], output_path: str = outpu
 
 
 if __name__ =="__main__" :
-    iterate_all_untill_all_downloaded(data)
+    iterate_all_untill_all_downloaded()
 
 

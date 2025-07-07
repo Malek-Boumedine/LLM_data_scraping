@@ -5,6 +5,8 @@ import os
 import random
 import time
 from dotenv import load_dotenv
+from src.utils import save_data_json
+import shutil
 
 load_dotenv()
 
@@ -12,6 +14,7 @@ load_dotenv()
 
 output_path = "data/scraping/"
 os.makedirs(output_path, exist_ok=True)
+    
 base_url = "https://www.legifrance.gouv.fr"
 start_url = os.getenv("START_URL_CONV_ETEN", "https://www.legifrance.gouv.fr/liste/idcc?facetteTexteBase=TEXTE_BASE&facetteEtat=VIGUEUR_ETEN&facetteEtat=VIGUEUR_NON_ETEN&sortValue=DATE_UPDATE&pageSize=9999&page=1&tab_selection=all#idcc")
 
@@ -20,13 +23,14 @@ start_url = os.getenv("START_URL_CONV_ETEN", "https://www.legifrance.gouv.fr/lis
 
 # extraire les articles :
 
-def extract_ce_articles_informations(start_url : str = start_url) -> list[dict]:
+def extract_ce_articles_informations(start_url : str = start_url, output_path: str = output_path) -> list[dict]:
     
+    os.makedirs(output_path, exist_ok=True)
     articles_data = []
     scraper = cloudscraper.create_scraper()
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         resp = scraper.get(start_url)
         page.set_content(resp.text)
@@ -81,13 +85,16 @@ def extract_ce_articles_informations(start_url : str = start_url) -> list[dict]:
                 "IDCC": idcc,
             })
             
-        time.sleep(random.uniform(1, 2))
+        # time.sleep(random.uniform(1, 2))
             
         print("Nombre total d'articles récupérés : ", len(articles_data))
         browser.close()
         
+    save_data_json(data=articles_data, json_file_name="articles_links_conventions_etendues.json", output_path=output_path)
     return articles_data
 
 
 ################################################################################################
 
+if __name__ == "__main__" : 
+    extract_ce_articles_informations()

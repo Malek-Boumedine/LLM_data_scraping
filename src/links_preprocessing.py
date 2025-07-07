@@ -16,7 +16,8 @@ os.makedirs(output_path, exist_ok=True)
 def preprocessing_ce(output_path: str = output_path) -> None:
     conventions_pdf = []
     conventions_no_pdf = []
-    scraped_file = os.path.join(data_path, "articles_links_conventions_etendues.json")
+    scraped_file_name = "articles_links_conventions_etendues.json"
+    scraped_file = os.path.join(data_path, scraped_file_name)
     with open(scraped_file, "r", encoding="utf-8") as f:
         data = json.load(f)
         for article in data:
@@ -45,7 +46,9 @@ def preprocessing_bocc(output_path: str = output_path) -> None:
 
     bocc_pdf = []
     bocc_no_pdf = []
-    with open("data/scraping/articles_links_BOCC.json", "r", encoding="utf-8") as f:
+    scraped_file = os.path.join(data_path, "articles_links_BOCC.json")
+    
+    with open(scraped_file, "r", encoding="utf-8") as f:
         data = json.load(f)
         for article in data:
             if article.get("lien PDF") is None:
@@ -58,6 +61,7 @@ def preprocessing_bocc(output_path: str = output_path) -> None:
     
     bocc_no_pdf_file_name = "no_pdf_bocc.json"
     save_data_json(bocc_no_pdf, bocc_no_pdf_file_name, output_path)
+    
 
 ######################################################
 

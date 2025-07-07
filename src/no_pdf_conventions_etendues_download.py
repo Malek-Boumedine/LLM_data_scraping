@@ -13,11 +13,20 @@ import random
 base_url = "https://www.legifrance.gouv.fr"
 output_path = "data/conventions_etendues/"
 logs_dir = "logs/convention_etendues/"
+json_path = "data/scraping/cleaned"
 
 os.makedirs(output_path, exist_ok=True)
 os.makedirs(logs_dir, exist_ok=True)
+os.makedirs(json_path, exist_ok=True)
 
-with open ("data/scraping/cleaned/no_pdf_cleaned_conventions_etendues.json", "r", encoding="utf-8") as f : 
+file_name = "no_pdf_cleaned_conventions_etendues.json"
+file_path = os.path.join(json_path, file_name)
+
+if not (os.path.isfile(file_path) and os.stat(file_path).st_size > 0):
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump([{'test': 'test'}], f, ensure_ascii=False, indent=2)
+
+with open(file_path, "r", encoding="utf-8") as f:
     data = json.load(f)
     
 
@@ -68,7 +77,7 @@ def download_manually(data: list[dict] = data, logs_dir: str = logs_dir):
             except Exception as e:
                 msg = f"❌ Erreur lors de la récupération du lien : {e}"
                 log_and_print(msg, logfile)
-                continue  # Passe à l'article suivant
+                continue 
 
             if full_text_link:
                 msg_open = (

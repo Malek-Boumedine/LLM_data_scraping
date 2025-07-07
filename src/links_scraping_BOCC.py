@@ -5,6 +5,7 @@ import os
 import time
 import random
 from dotenv import load_dotenv
+from src.utils import save_data_json
 
 load_dotenv()
 
@@ -26,7 +27,7 @@ def extract_bocc_articles_informations(start_url : str = start_url) -> list[dict
     scraper = cloudscraper.create_scraper()
 
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        browser = p.chromium.launch(headless=False)
         page = browser.new_page()
         resp = scraper.get(start_url)
         page.set_content(resp.text)
@@ -66,17 +67,18 @@ def extract_bocc_articles_informations(start_url : str = start_url) -> list[dict
                         "lien PDF": pdf_link,
                     })
                     
-                time.sleep(random.uniform(1, 2))
-
         except Exception as e :
             print(f"Erreur pendant la lecture de la page du lien {start_url} : {e}")
         
         finally :
             print("Nombre total d'articles récupérés : ", len(articles_data))
             browser.close()
-    
+
+    save_data_json(data=articles_data, json_file_name="articles_links_BOCC.json", output_path=output_path)
     return articles_data
 
 
 ################################################################################################
 
+if __name__ == "__main__" :
+    extract_bocc_articles_informations()
