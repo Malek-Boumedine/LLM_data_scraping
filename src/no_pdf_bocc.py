@@ -9,7 +9,7 @@ import random
 from PyPDF2 import PdfReader, PdfWriter
 import io
 from datetime import datetime
-from utils import log_and_print
+from src.utils import log_and_print
 
 
 

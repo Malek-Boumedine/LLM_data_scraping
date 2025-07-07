@@ -3,7 +3,7 @@ import os
 from playwright.sync_api import sync_playwright
 import cloudscraper
 from urllib.parse import urljoin
-from utils import log_and_print
+from src.utils import log_and_print
 from datetime import datetime
 import time
 import random
